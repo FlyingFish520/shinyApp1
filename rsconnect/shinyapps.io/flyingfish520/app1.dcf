@@ -1,0 +1,12 @@
+name: app1
+title: app1
+username:
+account: flyingfish520
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 243672
+bundleId: 1113101
+url: https://flyingfish520.shinyapps.io/app1/
+when: 1512355802.53403
+asMultiple: FALSE
+asStatic: FALSE
