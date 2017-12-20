@@ -894,9 +894,9 @@ server <- function(input, output,session) {
   #ID page
   output$dataID <- renderDataTable({
     if(input$dynasties=="北宋"){
-      datatable(nodes_bs)
+      datatable(bdatasr)
     }else{
-      datatable(nodes_ns)
+      datatable(ndatasr)
     }
   })
   

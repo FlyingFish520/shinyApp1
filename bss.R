@@ -7,7 +7,8 @@ nodes_bs$Names <- as.character(nodes_bs$Names)
 edges_bs$Source <- as.character(edges_bs$Source)
 edges_bs$Target <- as.character(edges_bs$Target)
 
-
+bdatasr = data.frame(nodes_bs$ID,nodes_bs$Names)
+names(bdatasr)[1:2] = c("ID","诗人") 
 
 #创建图对象
 library(igraph)
