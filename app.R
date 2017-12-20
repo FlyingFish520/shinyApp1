@@ -84,9 +84,9 @@ ui <- fluidPage(
         tabPanel("诗人查询",
           fluidRow(
             column(6,
-                   textInput("search", label = "诗人：", value = "请输入诗人ID或姓名")),
+                   textInput("search", label = h4(strong("诗人：")), value = "请输入诗人ID或姓名")),
             column(6,
-                   helpText(strong("热门搜索："),"辛弃疾，苏轼，王安石，李清照，秦观，陆游，李煜，黄庭坚，欧阳修，范仲淹，朱熹，周必大"))
+                   helpText(strong("热门搜索："),br(),"辛弃疾，苏轼，王安石，李清照，秦观，陆游，李煜，黄庭坚，欧阳修，范仲淹，朱熹，周必大"))
           ),
           hr(),
           h4("基本信息："),
@@ -99,8 +99,8 @@ ui <- fluidPage(
         tabPanel("关系查询",
           h5("注解：输入两位诗人，查询在当前朝代下他们之间是否存在联系，是主动关系还是被动关系"),
           br(),
-          textInput("poet1", label = "诗人1：", value = "请输入诗人1的ID或姓名"),
-          textInput("poet2", label = "诗人2：", value = "请输入诗人2的ID或姓名"),    
+          textInput("poet1", label = h4(strong("诗人1：")), value = "请输入诗人1的ID或姓名"),
+          textInput("poet2", label = h4(strong("诗人2：")), value = "请输入诗人2的ID或姓名"),    
           hr(),
           h5("诗人1 -> 诗人2："),
           wellPanel(verbatimTextOutput("rel1")),
@@ -187,17 +187,28 @@ ui <- fluidPage(
                 )
               ))
             )
-            
-            
         ),
         
         tabPanel("帮派",
-          h5("注解：展示当前朝代下紧密联系最大的三个帮派群体"),
-          selectInput("top", label = "Top：",choices = c("1","2","3"),selected = "1"),
+          fluidRow(
+              column(5,
+                     selectInput("top", 
+                                 label = h4(strong("三大帮派：")),choices = c("1","2","3"),selected = "1"),
+                     h5("注：展示当前朝代下紧密联系最大的三个诗人群体及其诗词中共有的风格特点")
+              ),
+              column(7,
+                     
+                     wellPanel(
+                       h4("帮派信息："),
+                       textOutput("info"))   
+                     
+              )
+            ),   
+          hr(),
           dataTableOutput("community")
         ),
         
-        tabPanel("ID",
+        tabPanel("ID-诗人对照表",
           dataTableOutput("dataID")
         )
         
@@ -366,15 +377,15 @@ server <- function(input, output,session) {
         x1 = input$search
         x2 = nodes_bs$Names[which(nodes_bs$ID==x1)]
         x3 = input$dynasties
-        list(ID=x1,姓名=x2,朝代=x3)
+        list(ID=x1,姓名=x2,当前朝代=x3)
       }else if(input$search%in%nodes_bs$Names){
         x2 = input$search
         x1 = nodes_bs$ID[which(nodes_bs$Names==x2)]
         x3 = input$dynasties
-        list(ID=x1,姓名=x2,朝代=x3)
+        list(ID=x1,姓名=x2,当前朝代=x3)
       }else if(input$search=="请输入诗人ID或姓名"){
         # return()
-        list("ID","姓名","朝代")
+        list("ID","姓名","当前朝代")
       }else{
         return("输入有误或者朝代不符，请修改！")
       }
@@ -383,15 +394,15 @@ server <- function(input, output,session) {
         x1 = input$search
         x2 = nodes_ns$Names[which(nodes_ns$ID==x1)]
         x3 = input$dynasties
-        list(ID=x1,姓名=x2,朝代=x3)
+        list(ID=x1,姓名=x2,当前朝代=x3)
       }else if(input$search%in%nodes_ns$Names){
         x2 = input$search
         x1 = nodes_ns$ID[which(nodes_ns$Names==x2)]
         x3 = input$dynasties
-        list(ID=x1,姓名=x2,朝代=x3)
+        list(ID=x1,姓名=x2,当前朝代=x3)
       }else if(input$search=="请输入诗人ID或姓名"){
         # return()
-        list("ID","姓名","朝代")
+        list("ID","姓名","当前朝代")
       }else{
         return("输入有误或者朝代不符，请修改！")
       }
@@ -860,8 +871,26 @@ server <- function(input, output,session) {
       }
     }
   })
-  
-  
+  output$info <- renderText({
+    if(input$dynasties=="北宋"){
+      if(input$top=="1"){
+        return("北宋时期，帮派成员人数有748人。其中，晏殊，欧阳修是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，婉转含蓄，结构深细缜密，音律婉转和谐，语言圆润清丽，具有婉约派的风格特点。")
+      }else if(input$top=="2"){
+        return("北宋时期，帮派成员人数有413人。其中，苏轼，贺铸，李纲是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，创作视野较为广阔，气象恢弘雄放，喜用诗文的手法、句法写词，语词宏博，用事较多，不拘守音律，然而有时失之平直，甚至涉于狂怪叫嚣，具有豪放派的风格特点。")
+      }else{
+        return("北宋时期，帮派成员人数有331人。其中，王安石是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，说理与修辞，含蓄深沉、深婉不迫，写物咏怀吊古，意境空阔苍茫，形象淡远纯朴。")
+      }
+    }else{
+      if(input$top=="1"){
+        return("南宋时期，帮派成员人数有721人。其中，周必大，陆游，张元干，张孝祥，陈与义等是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，词风慷慨悲凉，相激相慰，悲壮慷慨的高亢之调，以爱国恢复的壮词宏声组成雄阔的阵容，具有豪放派的风格特点。")
+      }else if(input$top=="2"){
+        return("南宋时期，帮派成员人数有673人。其中，朱熹，真德秀，張栻是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，体现理学思想，自然和谐，毫不牵强，颇有意境")
+      }else{
+        return("南宋时期，帮派成员人数有606人。其中，刘克庄是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，词风慷慨悲凉，相激相慰，反映民生，悲壮慷慨，饱含爱国情怀，具有豪放派的风格特点。")
+      }
+    }
+  })
+
   #ID page
   output$dataID <- renderDataTable({
     if(input$dynasties=="北宋"){

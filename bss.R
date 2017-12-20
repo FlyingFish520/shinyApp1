@@ -7,6 +7,8 @@ nodes_bs$Names <- as.character(nodes_bs$Names)
 edges_bs$Source <- as.character(edges_bs$Source)
 edges_bs$Target <- as.character(edges_bs$Target)
 
+
+
 #创建图对象
 library(igraph)
 gg1 = graph.data.frame(d = edges_bs[,c(1,2)], directed = T, vertices = nodes_bs)
@@ -62,14 +64,38 @@ gg12 <- as.undirected(gg1)
 
 #聚类分析
 fc1 <- cluster_fast_greedy(gg12)
-topbs1 = as.data.frame(fc1[[2]])
-topbs2 = as.data.frame(fc1[[9]])
-topbs3 = as.data.frame(fc1[[1]])
-names(topbs1)[1] = "ID"
-names(topbs2)[1] = "ID"
-names(topbs3)[1] = "ID"
+
+btempname1 = NULL
+for(i in fc1[[2]]){
+  btempname1[i] = nodes_bs$Names[which(nodes_bs$ID==i)]
+}
+# btempname1
+topbs1 = data.frame(btempname1)
+names(topbs1) = "成员"
+
+btempname2 = NULL
+for(i in fc1[[9]]){
+  btempname2[i] = nodes_bs$Names[which(nodes_bs$ID==i)]
+}
+# btempname2
+topbs2 = data.frame(btempname2)
+names(topbs2) = "成员"
+
+btempname3 = NULL
+for(i in fc1[[1]]){
+  btempname3[i] = nodes_bs$Names[which(nodes_bs$ID==i)]
+}
+# btempname3
+topbs3 = data.frame(btempname3)
+names(topbs3) = "成员"
 
 
+# 
+# tempname<-tempname[-1]
+# tempname<-tempname[-2]
+# tempname
+# class(tempname)
+# length(tempname)
 
 
 # membership(fc)
