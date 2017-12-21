@@ -96,7 +96,7 @@ ui <- fluidPage(
           wellPanel(plotOutput("SNA",height = 1200))
         ),
         
-        tabPanel("关系查询",
+        tabPanel("点对查询",
           h5("注解：输入两位诗人，查询在当前朝代下他们之间是否存在联系，是主动关系还是被动关系"),
           br(),
           textInput("poet1", label = h4(strong("诗人1：")), value = "请输入诗人1的ID或姓名"),
@@ -205,7 +205,8 @@ ui <- fluidPage(
               )
             ),   
           hr(),
-          dataTableOutput("community")
+          dataTableOutput("community"),
+          wellPanel(plotOutput("bpSNA",height = 1200))
         ),
         
         tabPanel("ID-诗人对照表",
@@ -874,19 +875,62 @@ server <- function(input, output,session) {
   output$info <- renderText({
     if(input$dynasties=="北宋"){
       if(input$top=="1"){
-        return("北宋时期，帮派成员人数有748人。其中，晏殊，欧阳修是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，婉转含蓄，结构深细缜密，音律婉转和谐，语言圆润清丽，具有婉约派的风格特点。")
+        return("北宋时期，帮派成员人数有748人。其中，晏殊（2073），欧阳修（1384），苏舜钦（7064），尹洙（7104），张方平（217），宋祁（1558）等是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，婉转含蓄，结构深细缜密，音律婉转和谐，语言圆润清丽，具有婉约派的风格特点。")
       }else if(input$top=="2"){
-        return("北宋时期，帮派成员人数有413人。其中，苏轼，贺铸，李纲是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，创作视野较为广阔，气象恢弘雄放，喜用诗文的手法、句法写词，语词宏博，用事较多，不拘守音律，然而有时失之平直，甚至涉于狂怪叫嚣，具有豪放派的风格特点。")
+        return("北宋时期，帮派成员人数有413人。其中，苏轼（3767），贺铸（18063），李纲（8078），杨时（2022），李之仪（3484），毛滂（3672）等是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，创作视野较为广阔，气象恢弘雄放，喜用诗文的手法、句法写词，语词宏博，用事较多，不拘守音律，然而有时失之平直，甚至涉于狂怪叫嚣，具有豪放派的风格特点。")
       }else{
-        return("北宋时期，帮派成员人数有331人。其中，王安石是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，说理与修辞，含蓄深沉、深婉不迫，写物咏怀吊古，意境空阔苍茫，形象淡远纯朴。")
+        return("北宋时期，帮派成员人数有331人。其中，王安石（1762），曾巩（7364），刘攽（1220）等是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，说理与修辞，含蓄深沉、深婉不迫，写物咏怀吊古，意境空阔苍茫，形象淡远纯朴，自然淳朴。")
       }
     }else{
       if(input$top=="1"){
-        return("南宋时期，帮派成员人数有721人。其中，周必大，陆游，张元干，张孝祥，陈与义等是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，词风慷慨悲凉，相激相慰，悲壮慷慨的高亢之调，以爱国恢复的壮词宏声组成雄阔的阵容，具有豪放派的风格特点。")
+        return("南宋时期，帮派成员人数有721人。其中，周必大（7197），陆游（3640），张元干（19699），张孝祥（3144），陈与义（8004）等是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，词风慷慨悲凉，相激相慰，悲壮慷慨的高亢之调，以爱国恢复的壮词宏声组成雄阔的阵容，具有豪放派的风格特点。")
       }else if(input$top=="2"){
-        return("南宋时期，帮派成员人数有673人。其中，朱熹，真德秀，張栻是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，体现理学思想，自然和谐，毫不牵强，颇有意境")
+        return("南宋时期，帮派成员人数有673人。其中，朱熹（3257），真德秀（10258），黄干（11134），陈宓（10892），张栻（7164）等是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，体现理学思想，自然和谐，毫不牵强，颇有意境")
       }else{
-        return("南宋时期，帮派成员人数有606人。其中，刘克庄是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，词风慷慨悲凉，相激相慰，反映民生，悲壮慷慨，饱含爱国情怀，具有豪放派的风格特点。")
+        return("南宋时期，帮派成员人数有606人。其中，刘克庄（3595），方大琮（11328），林光朝（10612），林希逸（11087），姚勉（27644）等是该诗人群体的核心人物，影响力大。成员的诗词风格大多受其影响，词风慷慨悲凉，相激相慰，反映民生，悲壮慷慨，饱含爱国情怀，具有豪放派的风格特点。")
+      }
+    }
+  })
+  output$bpSNA <- renderPlot({
+    if(input$dynasties=="北宋"){
+      if(input$top=="1"){
+        sg1 = subgraph(gg12,fc1[[2]])
+        plot(sg1,width="100%",height="100%",layout=layout.auto,
+             vertex.size = log(degree(sg1), 2)*1+3,vertex.color="#80B695",
+             vertex.label.dist=0.1,vertex.label.cex=1.3,vertex.label.color="black",
+             edge.color = "#80B695",edge.arrow.size = 0.4)
+      }else if(input$top=="2"){
+        sg1 = subgraph(gg12,fc1[[9]])
+        plot(sg1,width="100%",height="100%",layout=layout.auto,
+             vertex.size = log(degree(sg1), 2)*1+3,vertex.color="#80B695",
+             vertex.label.dist=0.1,vertex.label.cex=1.3,vertex.label.color="black",
+             edge.color = "#80B695",edge.arrow.size = 0.4)
+      }else{
+        sg1 = subgraph(gg12,fc1[[1]])
+        plot(sg1,width="100%",height="100%",layout=layout.auto,
+             vertex.size = log(degree(sg1), 2)*1+3,vertex.color="#80B695",
+             vertex.label.dist=0.1,vertex.label.cex=1.3,vertex.label.color="black",
+             edge.color = "#80B695",edge.arrow.size = 0.4)
+      }
+    }else{
+      if(input$top=="1"){
+        sg1 = subgraph(gg22,fc2[[3]])
+        plot(sg1,width="100%",height="100%",layout=layout.auto,
+             vertex.size = log(degree(sg1), 2)*1+3,vertex.color="#80B695",
+             vertex.label.dist=0.1,vertex.label.cex=1.3,vertex.label.color="black",
+             edge.color = "#80B695",edge.arrow.size = 0.4)
+      }else if(input$top=="2"){
+        sg1 = subgraph(gg22,fc2[[7]])
+        plot(sg1,width="100%",height="100%",layout=layout.auto,
+             vertex.size = log(degree(sg1), 2)*1+3,vertex.color="#80B695",
+             vertex.label.dist=0.1,vertex.label.cex=1.3,vertex.label.color="black",
+             edge.color = "#80B695",edge.arrow.size = 0.4)
+      }else{
+        sg1 = subgraph(gg22,fc2[[1]])
+        plot(sg1,width="100%",height="100%",layout=layout.auto,
+             vertex.size = log(degree(sg1), 2)*1+3,vertex.color="#80B695",
+             vertex.label.dist=0.1,vertex.label.cex=1.3,vertex.label.color="black",
+             edge.color = "#80B695",edge.arrow.size = 0.4)
       }
     }
   })
