@@ -121,7 +121,7 @@ ui <- fluidPage(
                 helpText("该诗人与多少诗人相互关联，数值由点度中心度计算"),
                 h4(strong("1"),align = "center"),
                 wellPanel(
-                  strong(textOutput("namedg1"),align="center"),
+                  h4(strong(textOutput("namedg1"),align="center")),
                   h5(textOutput("detaildg1"),align="center"),
                   wellPanel(imageOutput("imgdg1",height = 200))
                   
@@ -129,13 +129,13 @@ ui <- fluidPage(
                 ),
                 h4(strong("2"),align = "center"),
                 wellPanel(
-                  strong(textOutput("namedg2"),align="center"),
+                  h4(strong(textOutput("namedg2"),align="center")),
                   h5(textOutput("detaildg2"),align="center"),
                   wellPanel(imageOutput("imgdg2",height = 200))
                 ),
                 h4(strong("3"),align = "center"),
                 wellPanel(
-                  strong(textOutput("namedg3"),align="center"),
+                  h4(strong(textOutput("namedg3"),align="center")),
                   h5(textOutput("detaildg3"),align="center"),
                   wellPanel(imageOutput("imgdg3",height = 200))
                 )
@@ -146,19 +146,19 @@ ui <- fluidPage(
                 helpText("其他诗人相互联系要经过的最少人数中是否都包含该诗人，强调该诗人在其他诗人关联之间的调节控制能力，数值由中介中心度计算"),
                 h4(strong("1"),align = "center"),
                 wellPanel(
-                  strong(textOutput("namebt1"),align="center"),
+                  h4(strong(textOutput("namebt1"),align="center")),
                   h5(textOutput("detailbt1"),align="center"),
                   wellPanel(imageOutput("imgbt1",height = 200))
                 ),
                 h4(strong("2"),align = "center"),
                 wellPanel(
-                  strong(textOutput("namebt2"),align="center"),
+                  h4(strong(textOutput("namebt2"),align="center")),
                   h5(textOutput("detailbt2"),align="center"),
                   wellPanel(imageOutput("imgbt2",height = 200))
                 ),
                 h4(strong("3"),align = "center"),
                 wellPanel(
-                  strong(textOutput("namebt3"),align="center"),
+                  h4(strong(textOutput("namebt3"),align="center")),
                   h5(textOutput("detailbt3"),align="center"),
                   wellPanel(imageOutput("imgbt3",height = 200))
                 )
@@ -169,19 +169,19 @@ ui <- fluidPage(
                 helpText("根据相邻诗人的重要性来衡量该诗人的价值，数值由特征向量中心度计算"),
                 h4(strong("1"),align = "center"),
                 wellPanel(
-                  strong(textOutput("nameegin1"),align="center"),
+                  h4(strong(textOutput("nameegin1"),align="center")),
                   h5(textOutput("detailegin1"),align="center"),
                   wellPanel(imageOutput("imgegin1",height = 200))
                 ),
                 h4(strong("2"),align = "center"),
                 wellPanel(
-                  strong(textOutput("nameegin2"),align="center"),
+                  h4(strong(textOutput("nameegin2"),align="center")),
                   h5(textOutput("detailegin2"),align="center"),
                   wellPanel(imageOutput("imgegin2",height = 200))
                 ),
                 h4(strong("3"),align = "center"),
                 wellPanel(
-                  strong(textOutput("nameegin3"),align="center"),
+                  h4(strong(textOutput("nameegin3"),align="center")),
                   h5(textOutput("detailegin3"),align="center"),
                   wellPanel(imageOutput("imgegin3",height = 200))
                 )
