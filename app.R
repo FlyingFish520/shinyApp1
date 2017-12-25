@@ -96,7 +96,7 @@ ui <- fluidPage(
           wellPanel(plotOutput("SNA",height = 1200))
         ),
         
-        tabPanel("点对查询",
+        tabPanel("关系查询",
           h5("注解：输入两位诗人，查询在当前朝代下他们之间是否存在联系，是主动关系还是被动关系"),
           br(),
           textInput("poet1", label = h4(strong("诗人1：")), value = "请输入诗人1的ID或姓名"),
@@ -132,7 +132,7 @@ ui <- fluidPage(
                            h5(textOutput("detaildg1_value"),align="center")
                     )
                   ),
-                  h5(textOutput("detaildg1_info"),align="center")
+                  h5(textOutput("detaildg1_info"))
                 ),
                 h4(strong("2"),align = "center"),
                 wellPanel(
@@ -147,7 +147,7 @@ ui <- fluidPage(
                            h5(textOutput("detaildg2_value"),align="center")
                     )
                   ),
-                  h5(textOutput("detaildg2_info"),align="center")
+                  h5(textOutput("detaildg2_info"))
                 ),
                 h4(strong("3"),align = "center"),
                 wellPanel(
@@ -162,7 +162,7 @@ ui <- fluidPage(
                            h5(textOutput("detaildg3_value"),align="center")
                     )
                   ),
-                  h5(textOutput("detaildg3_info"),align="center")
+                  h5(textOutput("detaildg3_info"))
                 )
               )),
               
@@ -182,7 +182,7 @@ ui <- fluidPage(
                            h5(textOutput("detailbt1_value"),align="center")
                     )
                   ),
-                  h5(textOutput("detailbt1_info"),align="center")
+                  h5(textOutput("detailbt1_info"))
                 ),
                 h4(strong("2"),align = "center"),
                 wellPanel(
@@ -197,7 +197,7 @@ ui <- fluidPage(
                            h5(textOutput("detailbt2_value"),align="center")
                     )
                   ),
-                  h5(textOutput("detailbt2_info"),align="center")
+                  h5(textOutput("detailbt2_info"))
                 ),
                 h4(strong("3"),align = "center"),
                 wellPanel(
@@ -212,7 +212,7 @@ ui <- fluidPage(
                            h5(textOutput("detailbt3_value"),align="center")
                     )
                   ),
-                  h5(textOutput("detailbt3_info"),align="center")
+                  h5(textOutput("detailbt3_info"))
                 )
               )),
               
@@ -232,7 +232,7 @@ ui <- fluidPage(
                            h5(textOutput("detailegin1_value"),align="center")
                     )
                   ),
-                  h5(textOutput("detailegin1_info"),align="center")
+                  h5(textOutput("detailegin1_info"))
                 ),
                 h4(strong("2"),align = "center"),
                 wellPanel(
@@ -247,7 +247,7 @@ ui <- fluidPage(
                            h5(textOutput("detailegin2_value"),align="center")
                     )
                   ),
-                  h5(textOutput("detailegin2_info"),align="center")
+                  h5(textOutput("detailegin2_info"))
                 ),
                 h4(strong("3"),align = "center"),
                 wellPanel(
@@ -262,7 +262,7 @@ ui <- fluidPage(
                            h5(textOutput("detailegin3_value"),align="center")
                     )
                   ),
-                  h5(textOutput("detailegin3_info"),align="center")
+                  h5(textOutput("detailegin3_info"))
                 )
               ))
             )
@@ -717,9 +717,9 @@ server <- function(input, output,session) {
   })
   output$detaildg1_info <- renderText({
     if(input$dynasties=="北宋"){
-      paste("苏轼，字子瞻，又字和仲，号铁冠道人、东坡居士，世称苏东坡、苏仙。汉族，眉州眉山（今属四川省眉山市）人，祖籍河北栾城，北宋文学家、书法家、画家。")
+      paste("字子瞻，又字和仲，号铁冠道人、东坡居士，世称苏东坡、苏仙。汉族，眉州眉山（今属四川省眉山市）人，祖籍河北栾城，北宋文学家、书法家、画家。")
     }else{
-      paste("周必大，字子充，一字洪道，自号平园老叟。原籍郑州管城（今河南郑州），至祖父周诜时居吉州庐陵（今江西省吉安县永和镇周家村）。南宋著名政治家、文学家，“庐陵四忠”之一。")
+      paste("字子充，一字洪道，自号平园老叟。原籍郑州管城（今河南郑州），至祖父周诜时居吉州庐陵（今江西省吉安县永和镇周家村）。南宋著名政治家、文学家，“庐陵四忠”之一。")
     }
   })
   
@@ -753,9 +753,9 @@ server <- function(input, output,session) {
   })
   output$detaildg2_info <- renderText({
     if(input$dynasties=="北宋"){
-      paste("黄庭坚，字鲁直，号山谷道人，晚号涪翁，洪州分宁（今江西省九江市修水县）人，北宋著名文学家、书法家，为盛极一时的江西诗派开山之祖。") 
+      paste("字鲁直，号山谷道人，晚号涪翁，洪州分宁（今江西省九江市修水县）人，北宋著名文学家、书法家，为盛极一时的江西诗派开山之祖。") 
     }else{
-      paste("朱熹，字元晦，又字仲晦，号晦庵，晚称晦翁，谥文，世称朱文公。祖籍徽州府婺源县（今江西省婺源），出生于南剑州尤溪（今属福建省尤溪县）。宋朝著名的理学家、思想家、哲学家、教育家、诗人，闽学派的代表人物，儒学集大成者，世尊称为朱子。")
+      paste("字元晦，又字仲晦，号晦庵，晚称晦翁，谥文，世称朱文公。祖籍徽州府婺源县（今江西省婺源），出生于南剑州尤溪（今属福建省尤溪县）。宋朝著名的理学家、思想家、哲学家、教育家、诗人，闽学派的代表人物，儒学集大成者，世尊称为朱子。")
     }
   })
   
@@ -789,9 +789,9 @@ server <- function(input, output,session) {
   })
   output$detaildg3_info <- renderText({
     if(input$dynasties=="北宋"){
-      paste("欧阳修，字永叔，号醉翁，晚号六一居士，汉族，吉州永丰（今江西省吉安市永丰县）人，北宋政治家、文学家，且在政治上负有盛名。“唐宋八大家”之一，并与韩愈、柳宗元、苏轼被后人合称“千古文章四大家”。")
+      paste("字永叔，号醉翁，晚号六一居士，汉族，吉州永丰（今江西省吉安市永丰县）人，北宋政治家、文学家，且在政治上负有盛名。“唐宋八大家”之一，并与韩愈、柳宗元、苏轼被后人合称“千古文章四大家”。")
     }else{
-      paste("刘克庄，初名灼，字潜夫，号后村，福建省莆田市人。南宋豪放派诗人、词人、诗论家。诗属江湖诗派，内容开阔，多言谈时政，反映民生之作，早年学晚唐体，晚年诗风趋向江西诗派。词深受辛弃疾影响，多豪放之作，散文化、议论化倾向也较突出。")
+      paste("初名灼，字潜夫，号后村，福建省莆田市人。南宋豪放派诗人、词人、诗论家。诗属江湖诗派，内容开阔，多言谈时政，反映民生之作，早年学晚唐体，晚年诗风趋向江西诗派。词深受辛弃疾影响，多豪放之作，散文化、议论化倾向也较突出。")
     }
   })
  
@@ -819,16 +819,16 @@ server <- function(input, output,session) {
   })
   output$detailbt1_value <- renderText({
     if(input$dynasties=="北宋"){
-      paste("控制能力指数：6.189645e+05")
+      paste("控制能力指数：6.19e+05")
     }else{
-      paste("控制能力指数：1.297100e+06")
+      paste("控制能力指数：1.30e+06")
     }
   })
   output$detailbt1_info <- renderText({
     if(input$dynasties=="北宋"){
-      paste("苏轼，字子瞻，又字和仲，号铁冠道人、东坡居士，世称苏东坡、苏仙。汉族，眉州眉山（今属四川省眉山市）人，祖籍河北栾城，北宋文学家、书法家、画家。")
+      paste("又字和仲，号铁冠道人、东坡居士，世称苏东坡、苏仙。汉族，眉州眉山（今属四川省眉山市）人，祖籍河北栾城，北宋文学家、书法家、画家。")
     }else{
-      paste("朱熹，字元晦，又字仲晦，号晦庵，晚称晦翁，谥文，世称朱文公。祖籍徽州府婺源县（今江西省婺源），出生于南剑州尤溪（今属福建省尤溪县）。宋朝著名的理学家、思想家、哲学家、教育家、诗人，闽学派的代表人物，儒学集大成者，世尊称为朱子。")
+      paste("又字仲晦，号晦庵，晚称晦翁，谥文，世称朱文公。祖籍徽州府婺源县（今江西省婺源），出生于南剑州尤溪（今属福建省尤溪县）。宋朝著名的理学家、思想家、哲学家、教育家、诗人，闽学派的代表人物，儒学集大成者，世尊称为朱子。")
     }
   })
   
@@ -855,16 +855,16 @@ server <- function(input, output,session) {
   })
   output$detailbt2_value <- renderText({
     if(input$dynasties=="北宋"){
-      paste("控制能力指数：4.442349e+05") 
+      paste("控制能力指数：4.44e+05") 
     }else{
-      paste("控制能力指数：9.124949e+05")
+      paste("控制能力指数：9.12e+05")
     }
   })
   output$detailbt2_info <- renderText({
     if(input$dynasties=="北宋"){
-      paste("黄庭坚，字鲁直，号山谷道人，晚号涪翁，洪州分宁（今江西省九江市修水县）人，北宋著名文学家、书法家，为盛极一时的江西诗派开山之祖。") 
+      paste("号山谷道人，晚号涪翁，洪州分宁（今江西省九江市修水县）人，北宋著名文学家、书法家，为盛极一时的江西诗派开山之祖。") 
     }else{
-      paste("周必大，字子充，一字洪道，自号平园老叟。原籍郑州管城（今河南郑州），至祖父周诜时居吉州庐陵（今江西省吉安县永和镇周家村）。南宋著名政治家、文学家，“庐陵四忠”之一。")
+      paste("一字洪道，自号平园老叟。原籍郑州管城（今河南郑州），至祖父周诜时居吉州庐陵（今江西省吉安县永和镇周家村）。南宋著名政治家、文学家，“庐陵四忠”之一。")
     }
   })
 
@@ -891,16 +891,16 @@ server <- function(input, output,session) {
   })
   output$detailbt3_value <- renderText({
     if(input$dynasties=="北宋"){
-      paste("控制能力指数：3.472001e+05")
+      paste("控制能力指数：3.47e+05")
     }else{
-      paste("控制能力指数：6.645560e+05")
+      paste("控制能力指数：6.65e+05")
     }
   })
   output$detailbt3_info <- renderText({
     if(input$dynasties=="北宋"){
-      paste("欧阳修，字永叔，号醉翁，晚号六一居士，汉族，吉州永丰（今江西省吉安市永丰县）人，北宋政治家、文学家，且在政治上负有盛名。“唐宋八大家”之一，并与韩愈、柳宗元、苏轼被后人合称“千古文章四大家”。")
+      paste("字永叔，号醉翁，晚号六一居士，汉族，吉州永丰（今江西省吉安市永丰县）人，北宋政治家、文学家，且在政治上负有盛名。“唐宋八大家”之一，并与韩愈、柳宗元、苏轼被后人合称“千古文章四大家”。")
     }else{
-      paste("刘克庄，初名灼，字潜夫，号后村，福建省莆田市人。南宋豪放派诗人、词人、诗论家。诗属江湖诗派，内容开阔，多言谈时政，反映民生之作，早年学晚唐体，晚年诗风趋向江西诗派。词深受辛弃疾影响，多豪放之作，散文化、议论化倾向也较突出。")
+      paste("初名灼，字潜夫，号后村，福建省莆田市人。南宋豪放派诗人、词人、诗论家。诗属江湖诗派，内容开阔，多言谈时政，反映民生之作，早年学晚唐体，晚年诗风趋向江西诗派。词深受辛弃疾影响，多豪放之作，散文化、议论化倾向也较突出。")
     }
   })
   
@@ -928,16 +928,16 @@ server <- function(input, output,session) {
   })
   output$detailegin1_value <- renderText({
     if(input$dynasties=="北宋"){
-      paste("潜在价值：1.00000000")
+      paste("潜在价值：1.00")
     }else{
-      paste("潜在价值：1.00000000")
+      paste("潜在价值：1.00")
     }
   })
   output$detailegin1_info <- renderText({
     if(input$dynasties=="北宋"){
-      paste("苏轼，字子瞻，又字和仲，号铁冠道人、东坡居士，世称苏东坡、苏仙。汉族，眉州眉山（今属四川省眉山市）人，祖籍河北栾城，北宋文学家、书法家、画家。")
+      paste("字子瞻，又字和仲，号铁冠道人、东坡居士，世称苏东坡、苏仙。汉族，眉州眉山（今属四川省眉山市）人，祖籍河北栾城，北宋文学家、书法家、画家。")
     }else{
-      paste("朱熹，字元晦，又字仲晦，号晦庵，晚称晦翁，谥文，世称朱文公。祖籍徽州府婺源县（今江西省婺源），出生于南剑州尤溪（今属福建省尤溪县）。宋朝著名的理学家、思想家、哲学家、教育家、诗人，闽学派的代表人物，儒学集大成者，世尊称为朱子。")
+      paste("字元晦，又字仲晦，号晦庵，晚称晦翁，谥文，世称朱文公。祖籍徽州府婺源县（今江西省婺源），出生于南剑州尤溪（今属福建省尤溪县）。宋朝著名的理学家、思想家、哲学家、教育家、诗人，闽学派的代表人物，儒学集大成者，世尊称为朱子。")
     }
   })
   
@@ -964,16 +964,16 @@ server <- function(input, output,session) {
   })
   output$detailegin2_value <- renderText({
     if(input$dynasties=="北宋"){
-      paste("潜在价值：0.92527864") 
+      paste("潜在价值：0.93") 
     }else{
-      paste("潜在价值：0.88398557")
+      paste("潜在价值：0.88")
     }
   })
   output$detailegin2_info <- renderText({
     if(input$dynasties=="北宋"){
-      paste("黄庭坚，字鲁直，号山谷道人，晚号涪翁，洪州分宁（今江西省九江市修水县）人，北宋著名文学家、书法家，为盛极一时的江西诗派开山之祖。") 
+      paste("字鲁直，号山谷道人，晚号涪翁，洪州分宁（今江西省九江市修水县）人，北宋著名文学家、书法家，为盛极一时的江西诗派开山之祖。") 
     }else{
-      paste("周必大，字子充，一字洪道，自号平园老叟。原籍郑州管城（今河南郑州），至祖父周诜时居吉州庐陵（今江西省吉安县永和镇周家村）。南宋著名政治家、文学家，“庐陵四忠”之一。")
+      paste("字子充，一字洪道，自号平园老叟。原籍郑州管城（今河南郑州），至祖父周诜时居吉州庐陵（今江西省吉安县永和镇周家村）。南宋著名政治家、文学家，“庐陵四忠”之一。")
     }
   })
   
@@ -1000,16 +1000,16 @@ server <- function(input, output,session) {
   })
   output$detailegin3_value <- renderText({
     if(input$dynasties=="北宋"){
-      paste("潜在价值：0.85272168")
+      paste("潜在价值：0.85")
     }else{
-      paste("潜在价值：0.55869833")
+      paste("潜在价值：0.56")
     }
   })
   output$detailegin3_info <- renderText({
     if(input$dynasties=="北宋"){
-      paste("欧阳修，字永叔，号醉翁，晚号六一居士，汉族，吉州永丰（今江西省吉安市永丰县）人，北宋政治家、文学家，且在政治上负有盛名。“唐宋八大家”之一，并与韩愈、柳宗元、苏轼被后人合称“千古文章四大家”。")
+      paste("字永叔，号醉翁，晚号六一居士，汉族，吉州永丰（今江西省吉安市永丰县）人，北宋政治家、文学家，且在政治上负有盛名。“唐宋八大家”之一，并与韩愈、柳宗元、苏轼被后人合称“千古文章四大家”。")
     }else{
-      paste("楼钥，南宋大臣、文学家。字大防，又字启伯，号攻媿主人，明州鄞县（今属浙江宁波）人。")
+      paste("南宋大臣、文学家。字大防，又字启伯，号攻媿主人，明州鄞县（今属浙江宁波）人。")
     }
   })
             
