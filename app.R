@@ -1,18 +1,157 @@
+
+#加载包
 library(shiny)
 library(DT)
 
-source("bss.R")
-source("nss.R")
+# source("bss.R")
+#数据读取与转换
+nodes_bs <- read.table("data/nodes_bss.csv", header=TRUE, sep=",", as.is=TRUE)
+edges_bs <- read.table("data/edges_bss.csv", header=TRUE, sep=",", as.is=TRUE)
+nodes_bs$ID <- as.character(nodes_bs$ID)
+nodes_bs$Names <- as.character(nodes_bs$Names)
+edges_bs$Source <- as.character(edges_bs$Source)
+edges_bs$Target <- as.character(edges_bs$Target)
+
+bdatasr = data.frame(nodes_bs$ID,nodes_bs$Names)
+names(bdatasr)[1:2] = c("ID","诗人") 
+
+#创建图对象
+library(igraph)
+gg1 = graph.data.frame(d = edges_bs[,c(1,2)], directed = T, vertices = nodes_bs)
+gg1 = simplify(gg1)
+
+#度数中心度
+dg_bs = sort(degree(gg1), decreasing = T)
+dg1 = as.data.frame(dg_bs)
+dg1$ranks = c(1:3972)
+names(dg1)[1:2]<-c("人气度","排名")
+
+#中介中心度
+bt_bs = sort(betweenness(gg1),decreasing = T)
+bt1 = as.data.frame(bt_bs)
+bt1$ranks = c(1:3972)
+names(bt1)[1:2]<-c("控制能力指数","排名")
+
+#特征向量中心性分析
+eigen_bs = sort(eigen_centrality(gg1,scale = T)$vector,decreasing = T)
+eigen1 = as.data.frame(eigen_bs)
+eigen1$ranks = c(1:3972)
+names(eigen1)[1:2]<-c("潜在价值","排名")
+
+
+#无向图转换
+gg12 <- as.undirected(gg1)
+
+#聚类分析
+fc1 <- cluster_fast_greedy(gg12)
+
+btempname1 = NULL
+for(i in fc1[[2]]){
+  btempname1[i] = nodes_bs$Names[which(nodes_bs$ID==i)]
+}
+
+# btempname1
+topbs1 = data.frame(btempname1)
+names(topbs1) = "成员"
+
+btempname2 = NULL
+for(i in fc1[[9]]){
+  btempname2[i] = nodes_bs$Names[which(nodes_bs$ID==i)]
+}
+
+# btempname2
+topbs2 = data.frame(btempname2)
+names(topbs2) = "成员"
+
+btempname3 = NULL
+for(i in fc1[[1]]){
+  btempname3[i] = nodes_bs$Names[which(nodes_bs$ID==i)]
+}
+
+# btempname3
+topbs3 = data.frame(btempname3)
+names(topbs3) = "成员"
+
+
+# source("nss.R")
+#数据读取与转换
+nodes_ns <- read.table("data/nodes_nss.csv", header=TRUE, sep=",", as.is=TRUE)
+edges_ns <- read.table("data/edges_nss.csv", header=TRUE, sep=",", as.is=TRUE)
+nodes_ns$ID <- as.character(nodes_ns$ID)
+nodes_ns$Names <- as.character(nodes_ns$Names)
+edges_ns$Source <- as.character(edges_ns$Source)
+edges_ns$Target <- as.character(edges_ns$Target)
+
+ndatasr = data.frame(nodes_ns$ID,nodes_ns$Names)
+names(ndatasr)[1:2] = c("ID","诗人") 
+
+#创建图对象
+library(igraph)
+gg2 = graph.data.frame(d = edges_ns[,c(1,2)], directed = T, vertices = nodes_ns)
+gg2 = simplify(gg2)
+
+#度数中心度
+dg_ns = sort(degree(gg2), decreasing = T)
+dg2 = as.data.frame(dg_ns)
+dg2$ranks = c(1:5254)
+names(dg2)[1:2]<-c("人气度","排名")
+
+#中介中心度
+bt_ns = sort(betweenness(gg2),decreasing = T)
+bt2 = as.data.frame(bt_ns)
+bt2$ranks = c(1:5254)
+names(bt2)[1:2]<-c("控制能力指数","排名")
+
+#特征向量中心性分析
+eigen_ns = sort(eigen_centrality(gg2,scale = T)$vector,decreasing = T)
+eigen2 = as.data.frame(eigen_ns)
+eigen2$ranks = c(1:5254)
+names(eigen2)[1:2]<-c("潜在价值","排名")
+
+#无向图转换
+gg22 <- as.undirected(gg2)
+
+#聚类分析
+fc2 <- cluster_fast_greedy(gg22)
+
+ntempname1 = NULL
+for(i in fc2[[3]]){
+  ntempname1[i] = nodes_ns$Names[which(nodes_ns$ID==i)]
+}
+
+# ntempname1
+topns1 = data.frame(ntempname1)
+names(topns1) = "成员"
+
+ntempname2 = NULL
+for(i in fc2[[7]]){
+  ntempname2[i] = nodes_ns$Names[which(nodes_ns$ID==i)]
+}
+
+# ntempname2
+topns2 = data.frame(ntempname2)
+names(topns2) = "成员"
+
+ntempname3 = NULL
+for(i in fc2[[1]]){
+  ntempname3[i] = nodes_ns$Names[which(nodes_ns$ID==i)]
+}
+
+# ntempname3
+topns3 = data.frame(ntempname3)
+names(topns3) = "成员"
+
 
 # Define UI ----
 ui <- fluidPage(
   
   sidebarLayout(
+   
     
     #侧边栏
     sidebarPanel(
       titlePanel("宋代诗人社会网络"),
-      helpText("利用中国历代人物传记数据库，以诗人与诗人互相赠送诗文建立关系，构建北宋和南宋诗人互赠诗文关系网络。从网络的派系、度数中心度、中介中心度、接近中心度、特征向量中心度等出发，研究分析北宋和南宋诗人互赠诗文关系网络的结构特征，结合诗人及朝代背景，从而分析宋代诗词在诗人之间的传播特征。"),
+      helpText("利用中国历代人物传记数据库，以诗人互赠诗文建立关系，构建北宋和南宋诗人互赠诗文关系网络。利用社会网络分析（SNA）法，研究北宋和南宋诗人互赠诗文关系网络的结构特征。结合诗人及朝代背景，分析宋代诗词在诗人之间的传播特征。从而在以传统感性为主的人文学科研究基础上引入理性技术手段，将定量分析与定性分析融为一体，体现“数字人文”的思想，拓展了宋代诗词文化领域的研究。"),
       br(),
       selectInput("dynasties", label = h4(strong("朝代：")),choices = c("北宋","南宋"),selected = "北宋"),
       br(),
@@ -68,7 +207,6 @@ ui <- fluidPage(
         title = "SNASR：",
         
         tabPanel("网络图",
-          # h5("注解：数字代表诗人编号"),
           wellPanel(
             fluidRow(
               column(12,
@@ -80,7 +218,6 @@ ui <- fluidPage(
             )
           )
         ),
-        
         tabPanel("诗人查询",
           fluidRow(
             column(6,
@@ -113,8 +250,6 @@ ui <- fluidPage(
         ),
         
         tabPanel("排行榜",
-            # radioButtons("index", width="100%", h3("排名指标："),choices = list("人气度（该诗人与多少诗人相互关联，数值由点度中心度计算）" = 1, "控制能力指数（其他诗人相互联系要经过的最少人数中是否都包含该诗人，强调该诗人在其他诗人关联之间的调节控制能力，数值由中介中心度计算）" = 2,"潜在价值（根据相邻诗人的重要性来衡量该诗人的价值，数值由特征向量中心度计算）" = 3),selected = 1),
-            # dataTableOutput("rank")
             fluidRow(
               column(4,wellPanel(
                 h3(strong("人气度"),align = "center"),
@@ -288,7 +423,7 @@ ui <- fluidPage(
           wellPanel(plotOutput("bpSNA",height = 1200))
         ),
         
-        tabPanel("ID-诗人对照表",
+        tabPanel("诗人对照表",
           dataTableOutput("dataID")
         )
         
@@ -464,7 +599,6 @@ server <- function(input, output,session) {
         x3 = input$dynasties
         list(ID=x1,姓名=x2,当前朝代=x3)
       }else if(input$search=="请输入诗人ID或姓名"){
-        # return()
         list("ID","姓名","当前朝代")
       }else{
         return("输入有误或者朝代不符，请修改！")
@@ -481,13 +615,11 @@ server <- function(input, output,session) {
         x3 = input$dynasties
         list(ID=x1,姓名=x2,当前朝代=x3)
       }else if(input$search=="请输入诗人ID或姓名"){
-        # return()
         list("ID","姓名","当前朝代")
       }else{
         return("输入有误或者朝代不符，请修改！")
       }
     }
-    # paste("ID：", x1)
 
   })
   output$SNA <- renderPlot({
@@ -501,14 +633,6 @@ server <- function(input, output,session) {
       }else{
         return()
       }
-      # gn<-graph.neighborhood(gg1, order=1)
-      # gn1 = gn[[which(V(gg1)$name==x1)]]
-      # par(bg="black")
-      # plot(gn1,width="100%",height="100%",layout=layout.auto,
-      #     vertex.size = ifelse(V(gn1)$name==x1,15,5),vertex.color=ifelse(V(gn1)$name==x1,"red","#31A990"),
-      #     vertex.label.dist=0.3,vertex.label=V(gn1)$Names,vertex.label.cex=1.3,vertex.label.color="#FAFAF7",
-      #     edge.color = "#31A990",edge.arrow.size = 0.4)
-    
       gn<-graph.neighborhood(gg1, order=1)
       gn1 = gn[[which(V(gg1)$name==x1)]]
       plot(gn1,width="100%",height="100%",layout=layout.auto,
@@ -528,7 +652,6 @@ server <- function(input, output,session) {
       }
       gn<-graph.neighborhood(gg2, order=1)
       gn1 = gn[[which(V(gg2)$name==x1)]]
-      # par(bg="black")
       plot(gn1,width="100%",height="100%",layout=layout.auto,
            vertex.size = ifelse(V(gn1)$name==x1,15,5),vertex.color=ifelse(V(gn1)$name==x1,"red","#80B695"),
            vertex.label.dist=0.2,vertex.label=V(gn1)$Names,vertex.label.cex=1.3,vertex.label.color="black",
@@ -563,7 +686,7 @@ server <- function(input, output,session) {
         return()
       }
       
-      tempOut = neighbors(gg1, x1,mode = "out") #
+      tempOut = neighbors(gg1, x1,mode = "out") 
       if(x3 %in% tempOut$name){
         paste(x2," - > ",x4,":","主动关系，",x2,"为",x4,"作诗词碑赋，提及到该诗人")
       }else{
@@ -595,7 +718,7 @@ server <- function(input, output,session) {
         return()
       }
       
-      tempOut = neighbors(gg2, x1,mode = "out") #
+      tempOut = neighbors(gg2, x1,mode = "out") 
       if(x3 %in% tempOut$name){
         paste(x2," - > ",x4,":","主动关系，",x2,"为",x4,"作诗词碑赋，提及到该诗人")
       }else{
@@ -633,7 +756,7 @@ server <- function(input, output,session) {
         return()
       }
       
-      tempIn = neighbors(gg1, x1,mode = "in") #
+      tempIn = neighbors(gg1, x1,mode = "in") 
       if(x3 %in% tempIn$name){
         paste(x2," < -  ",x4,"：","被动关系，",x2,"被",x4,"赠诗词碑赋，文中被提及")
       }else{
@@ -665,7 +788,7 @@ server <- function(input, output,session) {
         return()
       }
       
-      tempIn = neighbors(gg2, x1,mode = "in") #
+      tempIn = neighbors(gg2, x1,mode = "in") 
       if(x3 %in% tempIn$name){
         paste(x2," < -  ",x4,"：","被动关系，",x2,"被",x4,"赠诗词碑赋，文中被提及")
       }else{

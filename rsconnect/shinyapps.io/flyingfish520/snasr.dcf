@@ -1,0 +1,13 @@
+name: snasr
+title: SNASR
+username:
+account: flyingfish520
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 250815
+bundleId: 1166292
+url: https://flyingfish520.shinyapps.io/snasr/
+when: 1515387439.63815
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .gitattributes|README.md
