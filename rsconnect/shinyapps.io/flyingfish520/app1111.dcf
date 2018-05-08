@@ -1,0 +1,13 @@
+name: app1111
+title: app1111
+username:
+account: flyingfish520
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 317222
+bundleId: 1307054
+url: https://flyingfish520.shinyapps.io/app1111/
+when: 1523069544.52507
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .gitattributes|README.md
